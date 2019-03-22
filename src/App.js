@@ -3,10 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
     constructor() {
         super()
         this.state = {
             picArray: [
+                /*
+
                 {
                     'title': 'Title 1',
                     'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sodales enim eget leo condimentum vulputate. Sed lacinia consectetur fermentum. Vestibulum lobortis purus id nisi mattis posuere. Praesent sagittis justo quis nibh ullamcorper, eget elementum lorem consectetur. Pellentesque eu consequat justo, eu sodales eros.',
@@ -31,9 +34,28 @@ class App extends Component {
                     },
                     'filename': 'http://placekitten.com/2039/1920',
                 },
-            ],
+            */],
         }
     }
+
+
+    componentDidMount() {
+
+            fetch('.//test.json')
+                .then((res) => {
+                    return res.json();
+                })
+                .then((json) => {
+                    this.setState({picArray: json});
+
+                    return this.state.picArray;
+                })
+
+    }
+
+
+
+
   render() {
     return (
           <table>
@@ -60,6 +82,8 @@ class App extends Component {
           </table>
     );
   }
+
+
 }
 
 export default App;
