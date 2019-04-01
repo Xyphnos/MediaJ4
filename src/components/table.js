@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tr from './tr';
+import tr from './tr';
 
 const Table = (props) => {
   const rows = props.picArray.map((item, i) => {
-    return <Tr key={i} pic={item}/>;
+    return <tr key={i} pic={item}/>;
   });
   return (
       <table>
