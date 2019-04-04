@@ -6,6 +6,7 @@ const Profile = (props) => {
   return (
       <React.Fragment>
         <h1>Profile</h1>
+
         <p>Username: {username}</p>
         <p>email: {email}</p>
         <p>Full name: {full_name}</p>

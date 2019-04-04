@@ -1,13 +1,18 @@
+// Login.js
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {login, register, getUser} from '../util/MediaAPI';
 
 class Login extends Component {
   state = {
-    username: '',
-    password: '',
-    email: '',
-    full_name: '',
+    user: {
+      username: '',
+      password: '',
+      email: '',
+      full_name: '',
+    },
+    toggleForm: true,
+    userAvailable: true,
   };
 
   handleLoginSubmit = (evt) => {
@@ -17,18 +22,22 @@ class Login extends Component {
 
   handleRegisterSubmit = (evt) => {
     evt.preventDefault();
-    register(this.state).then(user => {
+    register(this.state.user).then(user => {
       console.log(user);
       this.doLogin();
     });
   };
 
   doLogin = () => {
-    login(this.state.username, this.state.password).then(response => {
+    login(this.state.user.username, this.state.user.password).then(response => {
       console.log(response);
-      this.props.setUser(response.user);
-      localStorage.setItem('token', response.token);
-      this.props.history.push('/home');
+      if(response.token !== undefined) {
+        this.props.setUser(response.user);
+        localStorage.setItem('token', response.token);
+        this.props.history.push('/home');
+      } else {
+        alert(response.message);
+      }
     });
   };
 
@@ -39,9 +48,19 @@ class Login extends Component {
 
     console.log(value, name);
 
-    this.setState({
-      [name]: value,
+    this.setState((prevState) => {
+      return {
+        user: {
+          ...prevState.user,
+          [name]: value,
+        },
+      };
     });
+  };
+
+  checkUserAvailable = (evt) => {
+    // tarkasta onko käyttäjätunnus vapaa
+    // jos ei, tee esim alert()
   };
 
   componentDidMount() {
@@ -60,11 +79,11 @@ class Login extends Component {
           <h1>Login</h1>
           <form onSubmit={this.handleLoginSubmit}>
             <input type="text" name="username" placeholder="username"
-                   value={this.state.username}
+                   value={this.state.user.username}
                    onChange={this.handleInputChange}/>
             <br/>
             <input type="password" name="password" placeholder="password"
-                   value={this.state.password}
+                   value={this.state.user.password}
                    onChange={this.handleInputChange}/>
             <br/>
             <button type="submit">Login</button>
@@ -72,19 +91,19 @@ class Login extends Component {
           <h1>Register</h1>
           <form onSubmit={this.handleRegisterSubmit}>
             <input type="text" name="username" placeholder="username"
-                   value={this.state.username}
-                   onChange={this.handleInputChange}/>
+                   value={this.state.user.username}
+                   onChange={this.handleInputChange} />
             <br/>
             <input type="password" name="password" placeholder="password"
-                   value={this.state.password}
+                   value={this.state.user.password}
                    onChange={this.handleInputChange}/>
             <br/>
             <input type="email" name="email" placeholder="email"
-                   value={this.state.email}
+                   value={this.state.user.email}
                    onChange={this.handleInputChange}/>
             <br/>
             <input type="text" name="full_name" placeholder="full name"
-                   value={this.state.full_name}
+                   value={this.state.user.full_name}
                    onChange={this.handleInputChange}/>
             <br/>
             <button type="submit">Login</button>
