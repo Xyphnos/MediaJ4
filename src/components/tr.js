@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const Img = (props) => {
@@ -15,7 +14,7 @@ const Img = (props) => {
 };
 
 const Tr = (props) => {
-  const {title, description, file_id} = props.pic;
+  const {title, description, filename} = props.pic;
   return (
       <tr>
         <td>
@@ -26,7 +25,7 @@ const Tr = (props) => {
           <p>{description}</p>
         </td>
         <td>
-          <Link to={'single/' + file_id}>View</Link>
+          <Link to={mediaUrl + filename}>View</Link>
         </td>
       </tr>
   );

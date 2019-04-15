@@ -57,6 +57,6 @@ const getUser = (token) => {
   return fetch(apiUrl + 'users/user', settings).then(response => {
     return response.json();
   });
-}
+};
 
 export {getAllMedia, getSingleMedia, login, register, getUser};

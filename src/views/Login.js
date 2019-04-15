@@ -23,7 +23,6 @@ class Login extends Component {
   handleRegisterSubmit = (evt) => {
     evt.preventDefault();
     register(this.state.user).then(user => {
-      console.log(user);
       this.doLogin();
     });
   };
@@ -45,8 +44,6 @@ class Login extends Component {
     const target = evt.target;
     const value = target.value;
     const name = target.name;
-
-    console.log(value, name);
 
     this.setState((prevState) => {
       return {
